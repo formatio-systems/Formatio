@@ -34,7 +34,7 @@ export default function Services() {
     [mouseX, mouseY]
   );
 
-  const revealMask = useMotionTemplate`radial-gradient(400px circle at ${smoothX}px ${smoothY}px, black 0%, rgba(0,0,0,0.25) 45%, transparent 75%)`;
+  const revealMask = useMotionTemplate`radial-gradient(550px circle at ${smoothX}px ${smoothY}px, black 0%, rgba(0,0,0,0.3) 40%, transparent 70%)`;
 
   const advance = useCallback(() => {
     setActive((prev) => (prev + 1) % services.length);
@@ -56,7 +56,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative w-full py-40 md:py-52 px-8 overflow-hidden"
+      className="relative w-full py-32 md:py-40 px-8 overflow-hidden"
     >
       {/* Ambient background glow */}
       <motion.div
@@ -185,7 +185,7 @@ export default function Services() {
           onMouseMove={handleRevealMove}
           onMouseEnter={() => setIsRevealing(true)}
           onMouseLeave={() => setIsRevealing(false)}
-          className="relative mt-28 md:mt-36 border-t border-stone/5 pt-12"
+          className="relative mt-20 md:mt-28 border-t border-stone/5 pt-12"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -194,53 +194,68 @@ export default function Services() {
             transition={{ duration: 1.2, delay: 0.5 }}
             className="relative"
           >
-            {/* Ambient cursor glow on surface */}
+            {/* Ambient auto-drifting glow — always visible, subtle movement */}
             <motion.div
-              className="pointer-events-none absolute w-[700px] h-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+              className="pointer-events-none absolute w-[600px] h-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full left-1/2 top-1/2"
+              style={{
+                background:
+                  "radial-gradient(ellipse, rgba(181,169,154,0.06) 0%, rgba(138,126,114,0.015) 40%, transparent 65%)",
+              }}
+              animate={{
+                x: [0, 80, -60, 40, 0],
+                y: [0, -15, 10, -8, 0],
+                scaleX: [1, 1.15, 0.9, 1.1, 1],
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            {/* Cursor-follow glow on surface — desktop only */}
+            <motion.div
+              className="pointer-events-none absolute w-[900px] h-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full hidden sm:block"
               style={{
                 left: smoothX,
                 top: smoothY,
                 background:
-                  "radial-gradient(circle, rgba(181,169,154,0.07) 0%, rgba(138,126,114,0.015) 40%, transparent 65%)",
+                  "radial-gradient(circle, rgba(181,169,154,0.08) 0%, rgba(138,126,114,0.02) 35%, transparent 60%)",
               }}
               animate={{ opacity: isRevealing ? 1 : 0 }}
               transition={{ duration: 0.6 }}
             />
 
-            {/* Dim base layer — ghostly hint */}
+            {/* Base layer — slightly visible on mobile, ghostly on desktop */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 max-w-2xl mx-auto">
               <div>
-                <span className="block font-[family-name:var(--font-serif)] text-2xl sm:text-3xl text-ivory/10 tracking-tight">
+                <span className="block font-[family-name:var(--font-serif)] text-2xl sm:text-3xl text-ivory/30 sm:text-ivory/10 tracking-tight">
                   78%
                 </span>
-                <span className="block mt-2 text-[10px] tracking-[0.12em] text-taupe/5 leading-relaxed">
+                <span className="block mt-2 text-[10px] tracking-[0.12em] text-taupe/20 sm:text-taupe/5 leading-relaxed">
                   of organizations now integrate AI into at least one core function
                 </span>
               </div>
               <div>
-                <span className="block font-[family-name:var(--font-serif)] text-2xl sm:text-3xl text-ivory/10 tracking-tight">
+                <span className="block font-[family-name:var(--font-serif)] text-2xl sm:text-3xl text-ivory/30 sm:text-ivory/10 tracking-tight">
                   3.7x
                 </span>
-                <span className="block mt-2 text-[10px] tracking-[0.12em] text-taupe/5 leading-relaxed">
+                <span className="block mt-2 text-[10px] tracking-[0.12em] text-taupe/20 sm:text-taupe/5 leading-relaxed">
                   average ROI from AI&#8209;powered integration across enterprises
                 </span>
               </div>
               <div>
-                <span className="block font-[family-name:var(--font-serif)] text-2xl sm:text-3xl text-ivory/10 tracking-tight">
+                <span className="block font-[family-name:var(--font-serif)] text-2xl sm:text-3xl text-ivory/30 sm:text-ivory/10 tracking-tight">
                   72%
                 </span>
-                <span className="block mt-2 text-[10px] tracking-[0.12em] text-taupe/5 leading-relaxed">
+                <span className="block mt-2 text-[10px] tracking-[0.12em] text-taupe/20 sm:text-taupe/5 leading-relaxed">
                   of leaders report positive returns on AI investments within 24 months
                 </span>
               </div>
             </div>
-            <p className="mt-10 text-[9px] tracking-[0.1em] text-taupe/5">
+            <p className="mt-10 text-[9px] tracking-[0.1em] text-taupe/15 sm:text-taupe/5">
               Sources: Deloitte State of AI 2026, McKinsey, IDC
             </p>
 
-            {/* Bright reveal layer — masked to cursor */}
+            {/* Bright reveal layer — masked to cursor, desktop only */}
             <motion.div
-              className="absolute inset-0 pointer-events-none"
+              className="absolute inset-0 pointer-events-none hidden sm:block"
               style={{
                 maskImage: revealMask,
                 WebkitMaskImage: revealMask,
