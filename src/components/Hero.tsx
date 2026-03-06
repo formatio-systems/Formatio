@@ -135,7 +135,7 @@ export default function Hero() {
           <motion.span
             initial={{ opacity: 0, filter: "blur(8px)" }}
             animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 2, delay: 2 }}
+            transition={{ duration: 2, delay: 1.4 }}
             className="italic text-cashmere/70"
           >
             transformed
@@ -145,7 +145,7 @@ export default function Hero() {
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 1.5, delay: 2.5, ease: [0.25, 0.1, 0, 1] }}
+          transition={{ duration: 1.5, delay: 2, ease: [0.25, 0.1, 0, 1] }}
           className="mx-auto mt-12 w-16 h-px bg-taupe/40 origin-left"
         />
 
@@ -153,7 +153,7 @@ export default function Hero() {
           href="#services"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 3 }}
+          transition={{ duration: 1, delay: 2.4 }}
           whileHover={{ letterSpacing: "0.4em" }}
           className="inline-block mt-10 text-[10px] sm:text-xs tracking-[0.3em] uppercase text-stone-dark hover:text-stone-light transition-all duration-700 border-b border-stone-dark/30 hover:border-stone-light/30 pb-1"
         >
