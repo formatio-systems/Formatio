@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Formatio Systems | AI Integration Experts",
   description:
     "Elevate your business with expert AI integration. Strategy, implementation, and enterprise transformation services.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
